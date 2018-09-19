@@ -1,3 +1,8 @@
+/*
+All die Funktionen, die buntes Licht machen...
+Grundlage ist die Adafruit WS2801-Library
+*/
+
 void rainbow(uint8_t wait) {
   int i, j;
   while (1) {

@@ -1,3 +1,9 @@
+/*
+Decoder für das NEC-Protokoll
+Wird über Interrupt von Timer2 gesteuert.
+Achtung: Zeiten nicht verändern!!
+*/
+
 //Pins
 #define IR_PIN PIND
 #define IR_IN PD7

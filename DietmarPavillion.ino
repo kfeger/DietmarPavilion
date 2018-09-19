@@ -10,6 +10,7 @@ ISR(PCINT2_vect)	//Laufzeit ca. 10µs bei 8MHz
 Beachten: bei der Anpassung des Pins für den IR-Receiver muss
 auch die Konfig des PCINT angepasst werden.
 Siehe Funktion NEC_Init() in NEC_Decode
+gemacht mit Arduino IDE 1.6x, 1.8x könnte Probleme machen.
 */
 
 #include "Adafruit_WS2801.h"
@@ -91,14 +92,15 @@ void setup()
   LEDStrip.show();
   randomSeed(analogRead(0));
   EEPROM.get(0, Status);
-  if (Status.eUsed != 0x55aa) {
+  // Holt die Struktur Status aus dem EEPROM
+  if (Status.eUsed != 0x55aa) { // ganz frischer Start (nicht 0x55aa in Status.eUsed)?
     Serial.println(F("Kaltstart"));
     Status.eRed = Status.eGreen = Status.eBlue = 0;
     Status.eBefehl = 0;
     Status.eUsed = 0x55aa;
     EEPROM.put(0, Status);
   }
-  else
+  else  // gespeicherter Status
     EEPROM.get(0, Status);
 
   Serial.print("Status.eRed = ");
@@ -121,6 +123,7 @@ void setup()
   if (RC5.Befehl == SELECT_BUTTON)
     colorFillSlow(Color(Red, Green, Blue), 20);
   RC5.FreshData = 1;
+  // setup ist fertig, weiter in loop()
 }
 
 void loop() {
